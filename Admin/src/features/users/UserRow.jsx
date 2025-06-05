@@ -44,7 +44,7 @@ function UserRow({ data }) {
       <InfoCell>{user.sex}</InfoCell>
       <InfoCell>{user.role}</InfoCell>
 
-      <Amount>{formatVndCurrency(wallet.balance)}</Amount>
+      <Amount>{formatVndCurrency(wallet?.balance ?? 0)}</Amount>
     </Table.Row>
   );
 }

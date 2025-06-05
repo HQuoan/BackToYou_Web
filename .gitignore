@@ -1,0 +1,6 @@
+# Vite output
+dist/
+*.log
+
+# Node.js dependencies
+node_modules/

@@ -13,12 +13,13 @@ import {
   HiOutlinePhone,
   HiOutlineCurrencyDollar,
   HiOutlineClock,
+  HiOutlineCalendarDays,
 } from "react-icons/hi2";
 
 import DataItem from "../../ui/DataItem";
 import Tag from "../../ui/Tag";
 import { formatVndCurrency } from "../../utils/helpers";
-import { POST_TYPE_FOUND } from "./../../utils/constants";
+import { POST_LABEL_PRIORITY, POST_TYPE_FOUND } from "./../../utils/constants";
 import { useState } from "react";
 import ImageModal from "../../ui/ImageModal";
 
@@ -131,6 +132,8 @@ function PostDataBox({ post }) {
     postImages,
     rejectionReason,
     isEmbedded,
+    priorityDays,
+    priorityStartAt,
   } = post;
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -178,16 +181,30 @@ function PostDataBox({ post }) {
               {streetAddress}, {ward}, {district}, {province}
             </DataItem>
 
-            <DataItem icon={<HiOutlineTag />} label="Label">
-              <Tag type={postLabel.toLowerCase()}>{postLabel}</Tag>
-            </DataItem>
-
             <DataItem
               icon={<HiOutlineClock />}
               label={postType === POST_TYPE_FOUND ? "Found Date" : "Lost Date"}
             >
               {format(new Date(lostOrFoundDate), "EEE, MMM dd yyyy, p")}
             </DataItem>
+
+            <DataItem icon={<HiOutlineTag />} label="Label">
+              <Tag type={postLabel.toLowerCase()}>{postLabel}</Tag>
+            </DataItem>
+
+            {postLabel === POST_LABEL_PRIORITY && (
+              <>
+                <DataItem icon={<HiOutlineCalendarDays />} label="Prority Days">
+                  {priorityDays}
+                </DataItem>
+
+                <DataItem icon={<HiOutlineClock />} label="Priority Start At">
+                  {priorityStartAt
+                    ? format(new Date(priorityStartAt), "EEE, MMM dd yyyy, p")
+                    : "Chưa xác định"}
+                </DataItem>
+              </>
+            )}
 
             <DataItem icon={<HiOutlineCurrencyDollar />} label="Price">
               {formatVndCurrency(price)}

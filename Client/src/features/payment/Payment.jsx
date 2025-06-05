@@ -15,7 +15,7 @@ import { useDeleteReceipt } from "./useDeleteReceipt";
 import Spinner from "./../../ui/Spinner";
 import Pagination from "../../ui/Pagination";
 
-const DOMAIN = import.meta.env.VITE_API_BASE_URL;
+const DOMAIN = import.meta.env.VITE_DOMAIN;
 
 const Payment = () => {
   // State & Refs
