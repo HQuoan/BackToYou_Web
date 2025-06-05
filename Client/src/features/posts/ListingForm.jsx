@@ -47,7 +47,7 @@ function ListingForm({ mode }) {
   }, [isEdit, post, methods]);
 
   const onSubmit = async (data) => {
-    console.log("Submitted data:", data);
+    // console.log("Submitted data:", data);
     // Kiểm tra nếu có lỗi validation
     if (
       methods.formState.errors.latitude ||

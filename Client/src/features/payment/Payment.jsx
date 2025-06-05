@@ -14,6 +14,7 @@ import { useDeleteReceipt } from "./useDeleteReceipt";
 // UI Components
 import Spinner from "./../../ui/Spinner";
 import Pagination from "../../ui/Pagination";
+import { toast } from 'react-hot-toast';
 
 const DOMAIN = import.meta.env.VITE_DOMAIN;
 
@@ -79,7 +80,7 @@ const Payment = () => {
             },
             {
               onError: (err) => {
-                console.error("Tạo session thất bại:", err.message);
+                toast.error("Tạo session thất bại:", err.message);
               },
             }
           );
