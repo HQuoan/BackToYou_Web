@@ -18,15 +18,22 @@ export async function login(loginDto) {
     data: loginDto,
   });
 
+  const token = data?.result?.token;
+
+  if (token) {
+    localStorage.setItem("access_token", token);
+  }
+
   return data?.result?.user;
 }
-
 
 export async function logout() {
   await callAPI({
     method: HttpMethod.POST,
     url: `${ServiceRoutes.auth}/auth/logout`,
   });
+
+  localStorage.removeItem("access_token");
 }
 
 export async function assignRole(formData) {
@@ -43,7 +50,7 @@ export async function changePassword(formData) {
   await callAPI({
     method: HttpMethod.POST,
     url: `${ServiceRoutes.auth}/auth/change-password`,
-    data: formData
+    data: formData,
   });
 }
 
@@ -51,7 +58,7 @@ export async function forgotPassword(formData) {
   await callAPI({
     method: HttpMethod.POST,
     url: `${ServiceRoutes.auth}/auth/forgot-password`,
-    data: formData
+    data: formData,
   });
 }
 
@@ -59,6 +66,6 @@ export async function resetPassword(formData) {
   await callAPI({
     method: HttpMethod.POST,
     url: `${ServiceRoutes.auth}/auth/reset-password`,
-    data: formData
+    data: formData,
   });
 }

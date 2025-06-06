@@ -1,7 +1,6 @@
 import { callAPI, HttpMethod } from "./apiClient";
 import { ServiceRoutes } from "./ServiceRoutes";
 
-
 export async function register(registerData) {
   const data = await callAPI({
     method: HttpMethod.POST,
@@ -19,6 +18,12 @@ export async function login(loginDto) {
     data: loginDto,
   });
 
+  const token = data?.result?.token;
+
+  if (token) {
+    localStorage.setItem("access_token", token);
+  }
+
   return data?.result?.user;
 }
 
@@ -28,6 +33,12 @@ export async function loginWithGoogle(loginDto) {
     url: `${ServiceRoutes.auth}/auth/signin-google`,
     data: loginDto,
   });
+
+  const token = data?.result?.token;
+
+  if (token) {
+    localStorage.setItem("access_token", token);
+  }
 
   return data?.result?.user;
 }
@@ -39,6 +50,12 @@ export async function loginWithFacebook(loginDto) {
     data: loginDto,
   });
 
+  const token = data?.result?.token;
+
+  if (token) {
+    localStorage.setItem("access_token", token);
+  }
+
   return data?.result?.user;
 }
 
@@ -47,13 +64,15 @@ export async function logout() {
     method: HttpMethod.POST,
     url: `${ServiceRoutes.auth}/auth/logout`,
   });
+
+  localStorage.removeItem("access_token");
 }
 
 export async function changePassword(formData) {
   await callAPI({
     method: HttpMethod.POST,
     url: `${ServiceRoutes.auth}/auth/change-password`,
-    data: formData
+    data: formData,
   });
 }
 
@@ -61,7 +80,7 @@ export async function forgotPassword(formData) {
   await callAPI({
     method: HttpMethod.POST,
     url: `${ServiceRoutes.auth}/auth/forgot-password`,
-    data: formData
+    data: formData,
   });
 }
 
@@ -69,6 +88,6 @@ export async function resetPassword(formData) {
   await callAPI({
     method: HttpMethod.POST,
     url: `${ServiceRoutes.auth}/auth/reset-password`,
-    data: formData
+    data: formData,
   });
 }
