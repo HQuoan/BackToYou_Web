@@ -6,11 +6,14 @@ import PriorityLabel from "./PriorityLabel";
 import { Link } from "react-router-dom";
 import { formatDateVN } from "../utils/helpers";
 import LinkShareFb from "./LinkShareFb";
+import { POST_LABEL_FOUND } from "../utils/constants";
 
 const PostCard = ({ post, targetImgId = null }) => {
-  if(targetImgId){
-    const targetImg = post.postImages.find(i => i.postImageId === targetImgId);
-    post.thumbnailUrl = targetImg.imageUrl
+  if (targetImgId) {
+    const targetImg = post.postImages.find(
+      (i) => i.postImageId === targetImgId
+    );
+    post.thumbnailUrl = targetImg.imageUrl;
   }
 
   return (
@@ -37,7 +40,7 @@ const PostCard = ({ post, targetImgId = null }) => {
           <PostTypeBadge type={post.postType} />
           <span className="badge badge-lost-or-found-date mb-1">
             <i className="bi-calendar-fill me-1"></i>
-             {formatDateVN(post.createdAt)}
+            {formatDateVN(post.lostOrFoundDate)}
           </span>
         </div>
 
@@ -64,11 +67,14 @@ const PostCard = ({ post, targetImgId = null }) => {
             <i className="bi-share me-2"></i>
             Share
           </Link> */}
-          <LinkShareFb slug={post.slug}/>
+          <LinkShareFb slug={post.slug} />
         </div>
       </div>
 
       <PriorityLabel postLabel={post.postLabel} />
+      {post.postLabel === POST_LABEL_FOUND && (
+        <span className="post-label-block founded">Đã tìm thấy</span>
+      )}
 
       {/* <div className="social-share d-flex flex-column ms-auto">
         <a href="#" className="badge ms-auto">

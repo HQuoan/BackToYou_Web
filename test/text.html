@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Notification Fetcher</title>
+</head>
+<body>
+  <h2>Notification:</h2>
+  <pre id="output">Loading...</pre>
+
+  <script>
+    const url = "https://notification.backtoyou.io.vn/notifications/89d26538-f802-42cf-931d-4e343b47feb7";
+
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json(); // giả sử trả về JSON
+      })
+      .then(data => {
+        document.getElementById("output").textContent = JSON.stringify(data, null, 2); // hiển thị dưới dạng chuỗi
+      })
+      .catch(error => {
+        document.getElementById("output").textContent = "Error: " + error.message;
+      });
+  </script>
+</body>
+</html>

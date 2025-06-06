@@ -9,8 +9,8 @@ function LoginForm() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "admin@gmail.com",
-      password: "Admin@123",
+      // email: "admin@gmail.com",
+      // password: "Admin@123",
     },
   });
 

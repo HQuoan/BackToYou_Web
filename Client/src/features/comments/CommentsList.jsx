@@ -108,7 +108,7 @@ function CommentsList({ postId }) {
         )}
       </div>
 
-      {targetComment && (
+      {targetComment ? (
         <CommentItem
           key={targetComment.commentId}
           comment={targetComment}
@@ -116,7 +116,7 @@ function CommentsList({ postId }) {
           onDelete={handleDeleteComment}
           targetCommentId={targetCommentId}
         />
-      )}
+      ) : targetCommentId ?   <div className="text-danger text-center border-custom-primary p-3 mb-3">Bình luận này không tồn tại</div> : ""}
 
       {commentList.map((comment) =>
         comment.commentId !== targetCommentId ? (

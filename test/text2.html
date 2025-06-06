@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh mục bài viết</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #categories {
+      list-style-type: none;
+      padding: 0;
+    }
+    #categories li {
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Danh mục bài viết</h1>
+  <ul id="categories">Đang tải danh mục...</ul>
+
+  <script>
+    fetch('https://post.backtoyou.io.vn/categories')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Lỗi khi tải dữ liệu: ' + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        const list = document.getElementById('categories');
+        list.innerHTML = '';
+
+        if (!Array.isArray(data.result)) {
+          list.innerHTML = 'Không tìm thấy danh mục.';
+          return;
+        }
+
+        data.result.forEach(category => {
+          const li = document.createElement('li');
+          li.textContent = category.name;
+          list.appendChild(li);
+        });
+      })
+      .catch(error => {
+        const list = document.getElementById('categories');
+        list.innerHTML = 'Lỗi khi tải danh mục: ' + error.message;
+        console.error(error);
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Kết nối Notification Hub</title>
+  <!-- Đã bỏ integrity để tránh lỗi -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+</head>
+<body>
+  <h1>Thông báo từ Server</h1>
+  <ul id="messages"></ul>
+
+  <script>
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl("https://notification.backtoyou.io.vn/hubs/notification")
+      .withAutomaticReconnect()
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+
+    // Lắng nghe sự kiện từ server (thay 'ReceiveNotification' nếu tên khác)
+    connection.on("ReceiveNotification", function (message) {
+      const li = document.createElement("li");
+      li.textContent = message;
+      document.getElementById("messages").appendChild(li);
+    });
+
+    // Kết nối tới hub
+    connection.start()
+      .then(() => {
+        console.log("Đã kết nối đến Notification Hub");
+      })
+      .catch(err => {
+        console.error("Kết nối thất bại: ", err.toString());
+      });
+  </script>
+</body>
+</html>

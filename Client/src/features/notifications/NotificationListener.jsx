@@ -20,7 +20,7 @@ export const NotificationListener = () => {
 
         if (!isListenerRegistered.current && isMounted) {
           notificationHub.on("ReceiveNotification", (data) => {
-            // console.log("📩 Notification:", data);
+            console.log("📩 Notification:", data);
 
             // Phát âm thanh
             notificationSound.play().catch((err) => {

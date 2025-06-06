@@ -87,7 +87,7 @@ function DetailPost({ post }) {
                 <div className="ms-auto">
                   <PriorityLabel postLabel={post.postLabel} />
                   {post.postLabel === POST_LABEL_FOUND && (
-                    <span className="post-label-block">Đã tìm thấy</span>
+                    <span className="post-label-block founded">Đã tìm thấy</span>
                   )}
                 </div>
               </div>

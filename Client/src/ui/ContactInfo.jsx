@@ -5,6 +5,7 @@ import { useCreateFollower } from "../features/follower/useCreateFollower";
 import { useDeleteFollower } from "../features/follower/useDeleteFollower";
 import { useUpdateFollower } from "../features/follower/useUpdateFollower";
 import { useIsFollower } from "../features/follower/useIsFollower";
+import LinkShareFbIcon from "./LinkShareFbIcon";
 
 function ContactInfo({ post, onReport }) {
   const { user, isAuthenticated } = useUser();
@@ -55,7 +56,10 @@ function ContactInfo({ post, onReport }) {
                   )}
                   Đã theo dõi
                 </button>
-                <ul className="dropdown-menu" aria-labelledby="followerDropdown">
+                <ul
+                  className="dropdown-menu"
+                  aria-labelledby="followerDropdown"
+                >
                   <li>
                     <button
                       className="dropdown-item"
@@ -89,7 +93,8 @@ function ContactInfo({ post, onReport }) {
                         })
                       }
                     >
-                      <i className="bi bi-bell-slash me-2" /> Không nhận thông báo
+                      <i className="bi bi-bell-slash me-2" /> Không nhận thông
+                      báo
                     </button>
                   </li>
                 </ul>
@@ -137,11 +142,13 @@ function ContactInfo({ post, onReport }) {
               <i className="bi bi-whatsapp"></i>
             </a>
           </li>
+          <li className="social-icon-item">
+            <LinkShareFbIcon slug={post.slug} />
+          </li>
         </ul>
       </div>
     </div>
   );
 }
-
 
 export default ContactInfo;
