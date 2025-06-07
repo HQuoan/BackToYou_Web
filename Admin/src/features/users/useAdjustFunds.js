@@ -9,7 +9,7 @@ export function useAdjustFunds() {
     mutationFn: adjustFundsAPI,
     onSuccess: () => {
       toast.success("Balance updated successfully.");
-      queryClient.invalidateQueries({ queryKey: ["balance"] });
+      queryClient.invalidateQueries({ queryKey: ["users-balance"] });
     },
     onError: (err) => toast.error(err.message),
   });

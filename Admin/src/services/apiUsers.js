@@ -45,3 +45,14 @@ export async function uploadAvatar(avatar) {
   return res?.result;
 }
 
+
+export async function getUsersBalance({page, filter}) {
+  const data = await callAPI({
+    method: HttpMethod.GET,
+    url: `${ServiceRoutes.auth}/users`,
+    params: {...page, ...filter}
+  });
+
+  return data
+}
+

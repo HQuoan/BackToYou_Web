@@ -75,8 +75,6 @@ function PostRow({ post }) {
             >
               See details
             </Menus.Button>
-
-           
           </Menus.List>
         </Menus.Menu>
 

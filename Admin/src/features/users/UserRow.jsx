@@ -1,8 +1,13 @@
 import styled from "styled-components";
 import Table from "../../ui/Table";
-
 import { formatVndCurrency } from "../../utils/helpers";
 import { format } from "date-fns";
+import { ADMIN_ROLE, CUSTOMER_ROLE } from "../../utils/constants";
+import { useAssignRole } from "../authentication/useAssignRole";
+import Modal from "../../ui/Modal";
+import Menus from "../../ui/Menus";
+import { HiOutlineUserGroup, HiPlus } from "react-icons/hi2";
+import AddFundsForm from "./AddFundsForm";
 
 const Stacked = styled.div`
   display: flex;
@@ -29,23 +34,56 @@ const Amount = styled.div`
   font-weight: 500;
 `;
 
-function UserRow({ data }) {
-  const { user, wallet } = data;
+function UserRow({ user }) {
+  const { isLoading, assignRole } = useAssignRole();
+
+  function handleAssignRole() {
+    if (user.role === ADMIN_ROLE) {
+      assignRole({ email: user.email, role: CUSTOMER_ROLE });
+    } else {
+      assignRole({ email: user.email, role: ADMIN_ROLE });
+    }
+  }
 
   return (
-    <Table.Row>
-      <Stacked>
-        <span>{user.fullName}</span>
-        <span>{user.email}</span>
-      </Stacked>
+    <>
+      <Table.Row>
+        <Stacked>
+          <span>{user.fullName}</span>
+          <span>{user.email}</span>
+        </Stacked>
 
-      <InfoCell>{user.phoneNumber} </InfoCell>
-      <InfoCell>{format(new Date(user.dateOfBirth), "MMM dd yyyy")}</InfoCell>
-      <InfoCell>{user.sex}</InfoCell>
-      <InfoCell>{user.role}</InfoCell>
+        <InfoCell>{user.phoneNumber ?? "Unknown"} </InfoCell>
+        <InfoCell>{format(new Date(user.dateOfBirth), "MMM dd yyyy")}</InfoCell>
+        <InfoCell>{user.sex}</InfoCell>
+        <InfoCell>{user.role}</InfoCell>
 
-      <Amount>{formatVndCurrency(wallet?.balance ?? 0)}</Amount>
-    </Table.Row>
+        <Amount>{formatVndCurrency(user?.wallet?.balance ?? 0)}</Amount>
+
+        <Modal>
+          <Menus.Menu>
+            <Menus.Toggle id={user.id} />
+            <Menus.List id={user.id}>
+              <Modal.Open opens="edit">
+                <Menus.Button icon={<HiPlus />}>Add funds</Menus.Button>
+              </Modal.Open>
+              <Menus.Button
+                icon={<HiOutlineUserGroup />}
+                onClick={handleAssignRole}
+                disabled={isLoading}
+              >
+                Assign to{" "}
+                {user.role === ADMIN_ROLE ? CUSTOMER_ROLE : ADMIN_ROLE}
+              </Menus.Button>
+            </Menus.List>
+
+            <Modal.Window name="edit">
+              <AddFundsForm user={user} />
+            </Modal.Window>
+          </Menus.Menu>
+        </Modal>
+      </Table.Row>
+    </>
   );
 }
 

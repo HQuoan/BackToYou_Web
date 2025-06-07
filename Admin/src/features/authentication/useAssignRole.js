@@ -10,7 +10,7 @@ export function useAssignRole() {
     onSuccess: () => {
       toast.success("Cập nhật quyền hạn tài khoản thành công!");
       queryClient.invalidateQueries({ queryKey: ["user"] });
-      queryClient.invalidateQueries({ queryKey: ["balance"] });
+      queryClient.invalidateQueries({ queryKey: ["users-balance"] });
     },
     onError: (error) => {
       toast.error(error.message);
