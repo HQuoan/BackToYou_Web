@@ -20,7 +20,7 @@ export function useLogin() {
     onSuccess: (user) => {
       toast.success("Đăng nhập thành công!");
       queryClient.setQueryData(["user"], user);
-      console.log("user", user)
+      // console.log("user", user)
       navigate("/");
     },
     onError: (error) => {
